@@ -16,9 +16,9 @@ export const getLoginMessage = createSelector(
 // EVENTS STATE
 
 const events = [
-  { _id: '1', start: 20, duration: 5, title: 'хуй' },
-  { _id: '2', start: 20, duration: 199, title: 'хуй1' },
-  { _id: '3', start: 20, duration: 99, title: 'хуй2' },
+  { _id: '1', start: 20, duration: 5, title: 'foo' },
+  { _id: '2', start: 20, duration: 199, title: 'foo1' },
+  { _id: '3', start: 20, duration: 99, title: 'foo2' },
   { _id: '4', start: 26, duration: 60, title: 'title 2' },
   {
     _id: '5',
@@ -44,7 +44,6 @@ export const getEventsCols = createSelector([getEventsState], (state) => {
   let active = [];
 
   return events.reduce((cols, event) => {
-    debugger;
     active = active.filter(
       ({ start, duration }) => start + duration >= event.start
     );
