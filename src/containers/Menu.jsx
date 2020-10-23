@@ -1,9 +1,14 @@
-import React from 'react';
+import { connect } from 'react-redux';
 
-const Menu = () => {
-    return (
-        <section>Menu</section>
-    )
-}
+import { getUser } from '../store/selectors';
+import { logout } from '../store/actions/user';
 
-export default Menu
+import Menu from '../components/TopMenu';
+
+const mapStateToProps = (state) => ({
+    user: getUser(state)
+});
+
+const mapDispatchToProps = { logout };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);
