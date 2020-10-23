@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ReactLink = ({href='#', title, go = null, action = null}) => {
+const ReactLink = ({href='#', title, go = null, action = null, className = ''}) => {
     const nav = (e) => {
         e.preventDefault();
 
@@ -11,7 +11,7 @@ const ReactLink = ({href='#', title, go = null, action = null}) => {
         return false;
     };
 
-    return (<a href={href} className="link" onClick={nav} >{title}</a>)
+    return (<a href={href} onClick={nav} >{title}</a>)
 }
 
 export default ReactLink;
