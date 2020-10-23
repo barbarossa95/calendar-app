@@ -9,4 +9,4 @@ const mapStateToProps = () => ({
 
 const mapDispatchToProps = { login };
 
-return connect(mapStateToProps,mapDispatchToProps)(DayComp)
+export default connect(mapStateToProps,mapDispatchToProps)(DayComp)
