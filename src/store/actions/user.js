@@ -75,12 +75,11 @@ export const checkAuth = () => async (dispatch, getState) => {
   }
 };
 
-export const register = () => async (dispatch) => {
+export const register = (username, password) => async (dispatch) => {
   try {
-    const response = await axios.get('/auth/register', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+    const response = await axios.post('/auth/register', {
+        username,
+        password,
       }),
       {
         data: { token, user },
@@ -96,6 +95,11 @@ export const register = () => async (dispatch) => {
 
     dispatch(push(PAGE_HOME));
   } catch (error) {
-    logout()(dispatch);
+    dispatch({
+      type: at.LOGIN_FAIL,
+      message: error.response.data.message,
+    });
+
+    throw error;
   }
 };
