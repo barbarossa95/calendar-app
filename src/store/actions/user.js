@@ -62,9 +62,7 @@ export const checkAuth = () => async (dispatch, getState) => {
           Authorization: `Bearer ${token}`,
         },
       }),
-      {
-        data: { user },
-      } = response;
+      { data: user } = response;
 
     dispatch({
       type: at.FETCH_USER,
