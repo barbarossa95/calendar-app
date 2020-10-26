@@ -15,32 +15,14 @@ export const getLoginMessage = createSelector(
 
 // EVENTS STATE
 
-const events = [
-  { _id: '1', start: 20, duration: 5, title: 'foo' },
-  { _id: '2', start: 20, duration: 199, title: 'foo1' },
-  { _id: '3', start: 20, duration: 99, title: 'foo2' },
-  { _id: '4', start: 26, duration: 60, title: 'title 2' },
-  {
-    _id: '5',
-    start: 100,
-    duration: 11,
-    title: 'titletitletitletitletitletitletitletitletitle',
-  },
-  { _id: '6', start: 340, duration: 11, title: 'title' },
-  { _id: '7', start: 490, duration: 11, title: 'title' },
-];
+export const getEventsState = ({ events }) => events;
 
-export const getEventsState = (state) => {
-  return {
-    events,
-  };
-};
+export const getEvents = createSelector(
+  [getEventsState],
+  ({ events }) => events
+);
 
-export const getEvents = createSelector([getEventsState], (state) => {
-  return state.events;
-});
-
-export const getEventsCols = createSelector([getEventsState], (state) => {
+export const getEventsCols = createSelector([getEvents], (events) => {
   let active = [];
 
   return events.reduce((cols, event) => {
