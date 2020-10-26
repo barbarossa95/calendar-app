@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Event from '../Event';
 
@@ -6,8 +6,12 @@ import './Day.scss';
 
 const zeroPad = (num, places) => String(num).padStart(places, '0');
 
-const Day = ({ events, cols }) => {
+const Day = ({ events, cols, fetchEvents }) => {
+  debugger;
   const days = [...grid()];
+  useEffect(() => {
+    fetchEvents();
+  }, [fetchEvents]);
 
   function* grid() {
     const start = 0,
