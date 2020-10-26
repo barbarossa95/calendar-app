@@ -13,6 +13,16 @@ const handler = {
     };
   },
 
+  [at.EDIT_EVENT](state, { event }) {
+    const events = state.events.map((item) =>
+      event._id == item._id ? event : item
+    );
+    return {
+      ...state,
+      events,
+    };
+  },
+
   [at.FETCH_EVENTS](state, { events }) {
     return {
       ...state,
