@@ -7,7 +7,6 @@ import './Day.scss';
 const zeroPad = (num, places) => String(num).padStart(places, '0');
 
 const Day = ({ events, cols, fetchEvents }) => {
-  debugger;
   const days = [...grid()];
   useEffect(() => {
     fetchEvents();

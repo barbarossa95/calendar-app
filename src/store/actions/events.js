@@ -4,7 +4,6 @@ import * as at from '../actionTypes/events';
 import { AUTH_FAIL } from '../actionTypes/user';
 
 export const fetchEvents = () => async (dispatch, getState) => {
-  debugger;
   try {
     // const {
     //     user: { token = '' },
