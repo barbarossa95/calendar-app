@@ -4,11 +4,12 @@ import { login } from '../store/actions/user';
 import { fetchEvents } from '../store/actions/events';
 
 import DayComp from '../components/Day';
-import { getEvents, getEventsCols } from '../store/selectors';
+import { getEvents, getEventsCols, getEventsGrouped } from '../store/selectors';
 
 const mapStateToProps = (state) => ({
     cols: getEventsCols(state),
-    events: getEvents(state)
+    events: getEvents(state),
+    groupedEvents: getEventsGrouped(state)
 });
 
 const mapDispatchToProps = { login, fetchEvents };
