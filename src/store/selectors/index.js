@@ -44,7 +44,7 @@ export const getEventsGrouped = createSelector([getEvents], (events) => {
     event1.start < event2.start &&
     event1.start + event1.duration > event2.start;
 
-  return events.reduce((result, event, index) => {
+  return events.reduce((result, event) => {
     let pushed = false;
 
     result.forEach((group) => {
