@@ -41,9 +41,7 @@ export const addEvent = (event) => async (dispatch, getState) => {
         user: { token = '' },
       } = getState(),
       {
-        data: {
-          event: { _id: key },
-        },
+        data: { _id },
       } = await axios.post('/events', event, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -54,7 +52,7 @@ export const addEvent = (event) => async (dispatch, getState) => {
       type: at.ADD_EVENT,
       event: {
         ...event,
-        key,
+        _id,
       },
     });
   } catch (e) {

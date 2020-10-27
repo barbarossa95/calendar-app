@@ -15,7 +15,7 @@ const handler = {
 
   [at.EDIT_EVENT](state, { event }) {
     const events = state.events.map((item) =>
-      event._id == item._id ? event : item
+      event._id === item._id ? event : item
     );
 
     return {
