@@ -4,13 +4,10 @@ import Link from '../ReactLink';
 const LoginForm = ({login, message,  go}) => {
     const [username, setUsername] = useState(''),
         [password, setPassword] = useState(''),
-        reset = () => {
-            setUsername('');
-            setPassword('');
-        },
+
         onSubmit = () => {
             login(username,password)
-                .then(() => reset())
+                .then(() => {})
                 .catch(error => console.error(error));
 
         },
