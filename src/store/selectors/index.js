@@ -40,15 +40,37 @@ export const getEventsCols = createSelector([getEvents], (events) => {
 });
 
 export const getEventsGrouped = createSelector([getEvents], (events) => {
-  const isInterseted = (event1, event2) =>
-    event1.start < event2.start &&
-    event1.start + event1.duration > event2.start;
+  const isInterseted = (event1, event2) => {
+    let { start, end = null } = !Array.isArray(event1)
+      ? event1
+      : event1.reduce(
+          (data, event) => {
+            data.start < event.start && (data.start = event.start);
+            data.end < event.start + event.duration &&
+              (data.end = event.start + event.duration);
+
+            return data;
+          },
+          {
+            start: 0,
+            end: 0,
+          }
+        );
+
+    !end && (end = event1.start + event1.duration);
+
+    return (
+      (start < event2.start && end > event2.start) || start === event2.start
+    );
+  };
 
   return events.reduce((result, event) => {
     let pushed = false;
 
     result.forEach((group) => {
-      const intersection = group.filter((item) => isInterseted(item, event));
+      const intersection = group
+        .flat()
+        .filter((item) => isInterseted(item, event));
 
       if (intersection.length === 0) return;
 
@@ -62,7 +84,12 @@ export const getEventsGrouped = createSelector([getEvents], (events) => {
       const index = group.findIndex((item) => !isInterseted(item, event)),
         item = group[index];
 
-      group[index] = [item, event];
+      if (Array.isArray(item)) {
+        group[index] = [...item, event];
+      } else {
+        group[index] = [item, event];
+      }
+
       pushed = true;
 
       return false;
