@@ -1,6 +1,9 @@
+$border-color: blue;
+$background-color: #0095ff8f;
+
 .event {
-  background-color: #ef00ff73;
-  border-left: solid 5px #ef00ff;
+  background-color: $background-color;
+  border-left: solid 5px $border-color;
   position: absolute;
 
   &__title {
