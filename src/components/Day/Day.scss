@@ -1,22 +1,24 @@
 .grid {
-  &__minute {
-    height: 50px;
+  position: relative;
 
-    &__half-hour {
-      height: 50px;
-      border-top: solid 1px #9a9a9a;
+  &__time {
+    height: 300px;
+    border-top: solid 1px #9a9a9a;
+
+    &__label {
+      position: absolute;
+      left: 5px;
     }
   }
 
-  &__events-wrapper {
-    margin-left: 50px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  &__events-group {
+    position: absolute;
+    left: 50px;
   }
 
-  &__time {
+  &__events-wrapper {
     position: absolute;
-    left: 5px;
+    left: 0;
+    right: 0;
   }
 }

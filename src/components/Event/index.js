@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import './Event.scss';
 
-const Event = ({ event }) => {
+const Event = ({ event, position: { columnCount, columnIndex } }) => {
   const { _id, title, start, duration } = event,
     style = {
-      height: `${(duration / 5) * 50}px`,
+      top: `${start * 10}px`,
+      height: `${duration * 10}px`,
+      width: `calc(${100 / columnCount}vw - 50px)`,
+      left: `calc(${(columnIndex / columnCount) * 100}vw - ${
+        40 * columnIndex
+      }px)`,
     };
 
   return (

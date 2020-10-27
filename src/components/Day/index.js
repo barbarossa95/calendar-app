@@ -6,8 +6,7 @@ import './Day.scss';
 
 const zeroPad = (num, places) => String(num).padStart(places, '0');
 
-const Day = ({ events, cols, fetchEvents }) => {
-  const days = [...grid()];
+const Day = ({ groupedEvents, fetchEvents }) => {
   useEffect(() => {
     fetchEvents();
   }, [fetchEvents]);
@@ -15,31 +14,59 @@ const Day = ({ events, cols, fetchEvents }) => {
   function* grid() {
     const start = 0,
       end = 9 * 60,
-      step = 5;
-
-    let activeEvents = {};
+      step = 30;
 
     for (let minutes = start; minutes <= end; minutes++) {
       if (minutes % step !== 0 || minutes === end) continue;
 
-      const newEvents = getNewEvents(minutes, 1),
-        className =
-          minutes % 30 === 0 ? 'grid__minute__half-hour' : 'grid__minute';
-
-      activeEvents = filterActiveEvents(activeEvents, minutes);
-
       yield (
-        <div className={className} key={minutes}>
-          {minutes % 30 === 0 ? (
-            <div className="grid__time">{time(minutes)}</div>
-          ) : null}
-          <div className="grid__events-wrapper">
-            {renderEvents(newEvents, activeEvents)}
-          </div>
+        <div className="grid__time" key={minutes}>
+          <div className="grid__time_label">{time(minutes)}</div>
         </div>
       );
+    }
+  }
 
-      activeEvents = addActiveEvents(activeEvents, newEvents);
+  function* components() {
+    let i = 0,
+      j = 0;
+
+    for (let group of groupedEvents) {
+      const components = [],
+        columnCount = group.length;
+      let columnIndex = 0;
+
+      for (let groupItem of group) {
+        if (!Array.isArray(groupItem)) {
+          components.push(
+            <Event
+              key={j++}
+              event={groupItem}
+              position={{ columnCount, columnIndex }}></Event>
+          );
+
+          columnIndex++;
+
+          continue;
+        }
+
+        components.push(
+          ...groupItem.map((item) => (
+            <Event
+              key={j++}
+              event={item}
+              position={{ columnCount, columnIndex }}></Event>
+          ))
+        );
+
+        columnIndex++;
+      }
+
+      yield (
+        <div key={i++} className="grid__events-group">
+          {components}
+        </div>
+      );
     }
   }
 
@@ -55,67 +82,12 @@ const Day = ({ events, cols, fetchEvents }) => {
     return `${hours}:${minutes}`;
   }
 
-  function renderEvents(eventsList = [], activeEvents = {}) {
-    const components = [],
-      iterator = eventsList.values();
-    let nextEvent = iterator.next().value;
-
-    for (let colIndex = 1; colIndex <= cols; colIndex++) {
-      if (!activeEvents[colIndex] && nextEvent) {
-        components.push(<Event key={colIndex} event={nextEvent}></Event>);
-      } else {
-        components.push(
-          <div key={colIndex} className="event event__empty"></div>
-        );
-      }
-
-      nextEvent = iterator.next().value;
-    }
-
-    return components;
-  }
-
-  function getNewEvents(currentTime, step) {
-    return events.filter(
-      ({ start }) => start >= currentTime && start <= currentTime + step
-    );
-  }
-
-  function filterActiveEvents(activeEvents, currentTime) {
-    for (let colIndex in activeEvents) {
-      const event = activeEvents[colIndex];
-
-      if (!event) continue;
-
-      const { start, duration } = event;
-
-      if (start + duration >= currentTime) continue;
-
-      activeEvents[colIndex] = null;
-    }
-
-    return activeEvents;
-  }
-
-  function addActiveEvents(activeEvents = {}, newEvents = []) {
-    newEvents.forEach((event) => {
-      let colIndex = 0;
-
-      for (colIndex in activeEvents) {
-        if (activeEvents[colIndex] === null) {
-          activeEvents[colIndex] = event;
-
-          return;
-        }
-      }
-
-      activeEvents[++colIndex] = event;
-    });
-
-    return activeEvents;
-  }
-
-  return <div className="grid">{days}</div>;
+  return (
+    <div className="grid">
+      <div className="grid__events-wrapper">{[...components()]}</div>
+      {[...grid()]}
+    </div>
+  );
 };
 
 export default Day;
