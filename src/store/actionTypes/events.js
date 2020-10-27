@@ -4,3 +4,4 @@ export const FETCH_EVENTS = 'FETCH_EVENTS';
 export const CLEAR_EVENTS = 'CLEAR_EVENTS';
 
 export const EDIT_EVENT = 'EDIT_EVENT';
+export const DELETE_EVENT = 'DELETE_EVENT';

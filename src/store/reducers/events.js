@@ -17,6 +17,7 @@ const handler = {
     const events = state.events.map((item) =>
       event._id == item._id ? event : item
     );
+
     return {
       ...state,
       events,
@@ -32,6 +33,17 @@ const handler = {
 
   [at.CLEAR_EVENTS]() {
     return initialState;
+  },
+
+  [at.DELETE_EVENT](state, { event }) {
+    const { events } = state,
+      { _id } = event,
+      index = events.findIndex((i) => i._id === _id);
+
+    return {
+      ...state,
+      events: [...events.slice(0, index), ...events.slice(index + 1)],
+    };
   },
 };
 

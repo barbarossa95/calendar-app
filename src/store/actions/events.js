@@ -107,3 +107,41 @@ export const editEvent = (event) => async (dispatch, getState) => {
     }
   }
 };
+
+export const deleteEvent = (event) => async (dispatch, getState) => {
+  try {
+    const {
+        user: { token = '' },
+      } = getState(),
+      { _id: id } = event;
+
+    await axios.patch(
+      `/events/${id}`,
+      {
+        title,
+        start,
+        duration,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    dispatch({
+      type: at.DELETE_EVENT,
+      event,
+    });
+  } catch (e) {
+    if (e.request.status !== 200) {
+      console.error(e);
+    }
+    if (e.request.status === 401) {
+      localStorage.setItem('token', '');
+      dispatch({
+        type: AUTH_FAIL,
+      });
+    }
+  }
+};
