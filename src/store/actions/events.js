@@ -69,3 +69,41 @@ export const addEvent = (event) => async (dispatch, getState) => {
     }
   }
 };
+
+export const editEvent = (event) => async (dispatch, getState) => {
+  try {
+    const {
+        user: { token = '' },
+      } = getState(),
+      { _id: id, title, start, duration } = event;
+
+    await axios.patch(
+      `/events/${id}`,
+      {
+        title,
+        start,
+        duration,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    dispatch({
+      type: at.EDIT_EVENT,
+      event,
+    });
+  } catch (e) {
+    if (e.request.status !== 200) {
+      console.error(e);
+    }
+    if (e.request.status === 401) {
+      localStorage.setItem('token', '');
+      dispatch({
+        type: AUTH_FAIL,
+      });
+    }
+  }
+};
