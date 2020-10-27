@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { fetchEvents } from '../store/actions/events';
+import { fetchEvents, deleteEvent } from '../store/actions/events';
 
 import DayComp from '../components/Day';
 import { getEventsGrouped } from '../store/selectors';
@@ -9,6 +9,6 @@ const mapStateToProps = (state) => ({
     groupedEvents: getEventsGrouped(state)
 });
 
-const mapDispatchToProps = { fetchEvents };
+const mapDispatchToProps = { fetchEvents, deleteEvent };
 
 export default connect(mapStateToProps,mapDispatchToProps)(DayComp)
