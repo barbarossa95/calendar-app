@@ -113,7 +113,7 @@ export const deleteEvent = (event) => async (dispatch, getState) => {
       } = getState(),
       { _id: id } = event;
 
-    await axios.patch(`/events/${id}`, null, {
+    await axios.delete(`/events/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
