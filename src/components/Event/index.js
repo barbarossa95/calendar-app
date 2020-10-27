@@ -24,8 +24,8 @@ const Event = ({
 
   return (
     <div key={_id} className="event" style={style}>
-      <h1 className="event__title">
-        {title}
+      <h1 className="event__title">{title}</h1>
+      <div className="event__buttons">
         <small>
           <Link title="Edit" action={editHandler}></Link>
         </small>
@@ -33,7 +33,7 @@ const Event = ({
         <small>
           <Link title="Delete" action={deleteHandler}></Link>
         </small>
-      </h1>
+      </div>
     </div>
   );
 };
