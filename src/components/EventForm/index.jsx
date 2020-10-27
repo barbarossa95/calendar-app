@@ -17,14 +17,13 @@ function formatMinutes(value) {
     return `${hours}:${minutes}`;
   }
 
-
-
 const EventForm = ({event = null, go, post}) => {
     const [title, setTitle] = useState(!event ? '' : event.title),
         [start, setStart] = useState(!event ? 0 : event.start),
         [duration, setDuration] = useState(!event ? 15 : event.duration),
+        _id = event ? event._id : null,
         onSubmit = () => {
-            post({title,start,duration})
+            post({_id,title,start,duration})
                 .then(() => go('/'))
                 .catch(error => console.error(error));
         },
