@@ -74,7 +74,6 @@ export const editEvent = (event) => async (dispatch, getState) => {
         user: { token = '' },
       } = getState(),
       { _id: id, title, start, duration } = event;
-
     await axios.patch(
       `/events/${id}`,
       {
