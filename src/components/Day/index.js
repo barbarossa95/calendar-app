@@ -6,7 +6,7 @@ import './Day.scss';
 
 const zeroPad = (num, places) => String(num).padStart(places, '0');
 
-const Day = ({ groupedEvents, fetchEvents, deleteEvent }) => {
+const Day = ({ groupedEvents, fetchEvents, deleteEvent, go }) => {
   useEffect(() => {
     fetchEvents();
   }, [fetchEvents]);
@@ -43,6 +43,7 @@ const Day = ({ groupedEvents, fetchEvents, deleteEvent }) => {
               key={j++}
               event={groupItem}
               deleteEvent={deleteEvent}
+              editEvent={(url) => go(url)}
               position={{ columnCount, columnIndex }}></Event>
           );
 
@@ -57,6 +58,7 @@ const Day = ({ groupedEvents, fetchEvents, deleteEvent }) => {
               key={j++}
               event={item}
               deleteEvent={deleteEvent}
+              editEvent={(url) => go(url)}
               position={{ columnCount, columnIndex }}></Event>
           ))
         );
